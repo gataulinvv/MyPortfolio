@@ -14,8 +14,6 @@ namespace Domain.Services.Core
     {
         public static async Task<IOrderedEnumerable<T>> OrderByCustom<T>(this IEnumerable<T> source, string propertyName, IComparer<string> comparer, string direction) 
         {
-            try
-            {               
 
                 ParameterExpression paramExp = Expression.Parameter(typeof(T), "x");
 
@@ -42,12 +40,7 @@ namespace Domain.Services.Core
                 var result = (IOrderedEnumerable<T>)method.Invoke(null, new object[] { source, lambda, comparer });
 
                 return result;
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+           
 
         }
 

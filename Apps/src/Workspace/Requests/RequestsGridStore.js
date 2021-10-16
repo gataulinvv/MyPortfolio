@@ -1,102 +1,106 @@
-﻿import {
-  makeObservable, observable, action,
-} from 'mobx';
+﻿import { message } from 'antd';
+import { makeObservable, observable, action } from 'mobx';
 import axios from 'axios';
 import moment from 'moment';
-import { message } from 'antd';
 
 class RequestsGridStore {
-filterMatrix = [];
+  filterMatrix = [];
 
-data = [];
+  data = [];
 
-	filteredData = [];
+  filteredData = [];
 
-	loading = true;
+  loading = true;
 
-	constructor() {
-	  makeObservable(this, {
+  constructor() {
+    makeObservable(this, {
 
-	    loading: observable,
-	    data: observable,
-	    Delete: action,
-	    RefreshStore: action,
-	    filteredData: observable,
-	    SetFilteredData: action,
+      loading: observable,
+      data: observable,
+      Delete: action,
+      RefreshStore: action,
+      filteredData: observable,
+      SetFilteredData: action,
 
-	  });
-	}
+    });
+  }
 
-	Delete(id) {
-	  this.loading = true;
-	  axios.delete(`/api/Requests/${id}`).then((response) => {
-	    if (response.status == 200) {
-	      message.success('Елемент успешно удален');
+  Delete(id) {
+    this.loading = true;
+    axios.delete(`/api/Requests/${id}`).then((response) => {
+      if (response.status == 200) {
+        message.success('Елемент успешно удален');
 
-	      this.RefreshStore();
-	    } else { message.error('Елемент удалить не удалось!'); }
+        this.RefreshStore();
+      } else { message.error('Елемент удалить не удалось!'); }
 
-	    this.loading = false;
-	  }).catch((error) => {
-	    this.loading = false;
+      this.loading = false;
+    }).catch((error) => {
+      this.loading = false;
 
-	    message.error(error.toString());
-	  });
-	}
+      message.error(error.toString());
+    });
+  }
 
-	ClearStore() {
-	  this.data = [];
-	}
+  ClearStore() {
+    this.data = [];
+  }
 
-	parseDate(data) {
-	  const checkDate = moment().diff('0001-01-01', 'minutes');
+  parseDate(data) {
+    const checkDate = moment().diff('0001-01-01', 'minutes');
 
-	  const bDate = moment().diff(data.date, 'minutes');
-	  if (bDate == checkDate) { data.date = ''; } else { data.date = moment(data.date).format('DD-MM-YYYY'); }
-	}
+    const bDate = moment().diff(data.date, 'minutes');
 
-	parseRoles(data) {
-	  data.roleNamesList = data.roleNamesList.join(' ');
-	}
+    if (bDate == checkDate) {
+      data.date = '';
+    } else {
+      data.date = moment(data.date).format('DD-MM-YYYY');
+    }
+  }
 
-	RefreshStore() {
-	  const spec = { Page: 1, Take: 25 };
+  parseRoles(data) {
+    data.roleNamesList = data.roleNamesList.join(' ');
+  }
 
-	  const x = 1;
+  RefreshStore() {
+    const spec = { Page: 1, Take: 25 };
 
-	  this.loading = true;
+    const x = 1;
 
-	  axios.get('/api/Requests').then((response) => {
-	    if (response.status == 200) {
-	      if (!response.data.isOk) { window.location.href = window.history.back(); }
+    this.loading = true;
 
-	      for (let i = 0; i < response.data.data.length; i++) {
-	        const row = response.data.data[i];
+    axios.get('/api/Requests').then((response) => {
+      if (response.status == 200) {
+        if (!response.data.isOk) { window.location.href = window.history.back(); }
 
-	        const columns = [];
+        for (let i = 0; i < response.data.data.length; i += 1) {
+          const row = response.data.data[i];
 
-	        for (const column in row) {
-	          columns[column] = { match: true };
-	        }
+          const columns = [];
 
-	        this.filterMatrix[row.id] = { columns, display: true };
+          for (let j = 0; j < Object.keys(row).length; j += 1) {
+            const column = Object.keys(row)[j];
+            columns[column] = { match: true };
+          }
 
-	        this.parseDate(row);
-	        this.parseRoles(row);
-	      }
-	      this.data = response.data.data;
-	      this.filteredData = response.data.data;
-	    }
-	    this.loading = false;
-	  }).catch((error) => {
-	    this.loading = false;
-	    console.log(error);
-	  });
-	}
+          this.filterMatrix[row.id] = { columns, display: true };
 
-	SetFilteredData(filteredData) {
-	  this.filteredData = filteredData;
-	}
+          this.parseDate(row);
+          this.parseRoles(row);
+        }
+        this.data = response.data.data;
+        this.filteredData = response.data.data;
+      }
+      this.loading = false;
+    }).catch((error) => {
+      this.loading = false;
+      console.log(error);
+    });
+  }
+
+  SetFilteredData(filteredData) {
+    this.filteredData = filteredData;
+  }
 }
 
 export default RequestsGridStore;

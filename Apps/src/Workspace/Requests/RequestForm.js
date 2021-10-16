@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import {
   DatePicker, Button, Select, Form, Spin, message, Skeleton,
@@ -177,7 +177,8 @@ const RequestForm = (props) => {
                           .toLowerCase().indexOf(input.toLowerCase()) >= 0}
                       >
                         {
-                                                    store.data.clients_list
+
+                                     store.data.clients_list
 
                                                     && store.data.clients_list.map((item) => (
                                                       <Select.Option

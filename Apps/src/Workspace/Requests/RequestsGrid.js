@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import {
   Table, Empty, Spin, Button, Popconfirm,
