@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "Name": "MVCApp",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build-prod": "set NODE_ENV=production && webpack --config webpack.config.js --progress"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/eslint-parser": "^7.15.8",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^6.2.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "mini-css-extract-plugin": "^2.2.0",
+    "webpack": "^5.54.0",
+    "webpack-cli": "^4.8.0"
+  },
+  "dependencies": {
+    "@material-ui/core": "*",
+    "@material-ui/icons": "*",
+    "@material-ui/styles": "*",
+    "antd": "^4.16.7",
+    "axios": "0.21.1",
+    "glob": "^7.1.7",
+    "material-ui": "^0.20.2",
+    "mobx": "6.1.8",
+    "mobx-react": "7.1.0",
+    "moment": "^2.29.1",
+    "prop-types": "15.7.2",
+    "qs": "^6.10.1",
+    "rc-dialog": "^8.5.2",
+    "react": "^17.0.2",
+    "react-dom": "17.0.2",
+    "react-draggable": "^4.4.3",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "styled-components": "5.2.1",
+    "styled-icons": "10.31.0"
+  }
+}

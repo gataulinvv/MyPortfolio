@@ -1,0 +1,14 @@
+﻿@model Apps.MVCApp.ViewModels.LoginViewModel
+
+<div id="__RequestVerificationToken">@Html.AntiForgeryToken()</div>
+
+<h1 align="center">Вход в систему</h1>
+<input hidden="hidden" value="@Model.ReturnUrl" id="ReturnUrl" />
+<div align="center" id="root"></div>
+
+
+<div id="root"></div>
+<script src="~/bundles/login.js"></script>
+<link rel="stylesheet" href="~/bundles/login.css" />
+
+
