@@ -21,6 +21,10 @@ module.exports = {
     'react',
   ],
   rules: {
+    'no-inner-declarations': 0,
+    'jsx-a11y/no-static-element-interactions': 0,
+    eqeqeq: 0,
+    'max-len': [1, 105, 4],
     'no-use-before-define': 0,
     'react/prop-types': 0,
     'import/no-absolute-path': 0,

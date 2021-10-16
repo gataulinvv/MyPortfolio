@@ -125,9 +125,7 @@ const RequestForm = (props) => {
                       <DatePicker
                         style={{ width: '100%' }}
                         format="DD-MM-YYYY"
-
                         value={store.data.date}
-
                         onChange={(date) => changeDate(date)}
                       />
                     </div>
@@ -137,7 +135,6 @@ const RequestForm = (props) => {
                     name="user_id"
                     label="Пользователь"
                     style={{ marginBottom: '0px' }}
-
                     rules={[{ validator: (rule, value) => checkUserId(rule, store.data.user_id) }]}
                   >
                     <div>
@@ -145,7 +142,8 @@ const RequestForm = (props) => {
                         showSearch
                         onChange={chengeUserId}
                         value={store.data.user_id}
-                        filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        filterOption={(input, option) => option.children.toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0}
                       >
                         {
                                                     store.data.users_list
@@ -168,7 +166,6 @@ const RequestForm = (props) => {
                     name="client_id"
                     label="Клиент"
                     style={{ marginBottom: '0px' }}
-
                     rules={[{ validator: (rule, value) => checkIntValue(rule, store.data.client_id) }]}
                   >
                     <div>
@@ -176,7 +173,8 @@ const RequestForm = (props) => {
                         showSearch
                         onChange={changeClientId}
                         value={store.data.client_id}
-                        filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        filterOption={(input, option) => option.children
+                          .toLowerCase().indexOf(input.toLowerCase()) >= 0}
                       >
                         {
                                                     store.data.clients_list
@@ -211,4 +209,4 @@ export default observer(RequestForm);
 
 // <Spin spinning={store.loading} >
 // <Spin spinning={store.loading}>
-//	</Spin>
+// </Spin>
