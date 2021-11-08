@@ -24,10 +24,10 @@ namespace Apps.MVCApp
                 await CreateUsers(userManager, roleManager);
 
             if (!DBcontext.clients.Any())
-                CreateClients(DBcontext);
+                await CreateClients(DBcontext);
 
             if (!DBcontext.requests.Any())
-                CreateRequests(DBcontext, userManager);
+                await CreateRequests(DBcontext, userManager);
         }
 
         private static async Task CreateRoles(RoleManager<IdentityRole> roleManager)
@@ -89,27 +89,25 @@ namespace Apps.MVCApp
 
 
 
-        private static void CreateClients(MVCAppContext DBcontext)
+        private static async Task CreateClients(MVCAppContext DBcontext)
         {
 
+            await DBcontext.clients.AddAsync(new Client { name = "Yandex", email = "client@Yandex.com" });
 
+            await DBcontext .clients.AddAsync(new Client { name = "Google", email = "client@Google.com" });
 
-            DBcontext.clients.Add(new Client { name = "Yandex", email = "client@Yandex.com" });
+            await DBcontext.clients.AddAsync(new Client { name = "Microsoft", email = "client@Microsoft.com" });
 
-            DBcontext.clients.Add(new Client { name = "Google", email = "client@Google.com" });
-
-            DBcontext.clients.Add(new Client { name = "Microsoft", email = "client@Microsoft.com" });
-
-            DBcontext.SaveChanges();
+            await DBcontext.SaveChangesAsync();
         }
 
-        private static void CreateRequests(MVCAppContext _DBcontext, UserManager<AppUser> _userManager)
+        private static async Task CreateRequests(MVCAppContext _DBcontext, UserManager<AppUser> _userManager)
         {
             var users = _userManager.Users.ToList();
 
             var clients = _DBcontext.clients.ToList();
 
-
+            var requests = new List<Request>();
 
             for (int i = 0; i < users.Count(); i++)
             {
@@ -131,9 +129,8 @@ namespace Apps.MVCApp
                 });
 
             }
-
-            _DBcontext.SaveChanges();
-
+            
+            await _DBcontext.SaveChangesAsync();
 
         }
     }
