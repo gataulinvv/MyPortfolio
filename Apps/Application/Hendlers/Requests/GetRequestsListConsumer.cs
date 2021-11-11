@@ -19,13 +19,7 @@ using System.Linq.Expressions;
 
 namespace Apps.MVCApp.Application.Hendlers.Requests
 {
-    public class Paging : IPaging
-    {
-        public int Page => 1;
-        public string name => "1000";
-        public string OrderBy => "name";
-        public int Take => 25;
-    }
+   
     public class GetRequestsListConsumer : IConsumer<GetRequestsListCommand>
     {
 
