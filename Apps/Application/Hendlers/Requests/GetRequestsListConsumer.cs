@@ -15,7 +15,7 @@ using Force.AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-
+using Nest;
 
 namespace Apps.MVCApp.Application.Hendlers.Requests
 {
@@ -25,13 +25,26 @@ namespace Apps.MVCApp.Application.Hendlers.Requests
 
         MVCAppContext _DBcontext;
 
+        ElasticClient _ElasticClient;
         public GetRequestsListConsumer(MVCAppContext dbContext)
         {
+
+            var settings = new ConnectionSettings(new Uri("http://localhost:18896/")).DefaultIndex("requests");
+            _ElasticClient = new ElasticClient(settings);
             _DBcontext = dbContext;
         }
         public async Task Consume(ConsumeContext<GetRequestsListCommand> context)
         {
+            try
+            {
+                //var indexResponse = _ElasticClient.IndexDocument(_DBcontext.requests);
 
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
             var requestsList = _DBcontext.requests.Select(i => new RequestGridViewModel
             {
                 Id = i.id,

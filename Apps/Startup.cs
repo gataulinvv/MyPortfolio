@@ -35,9 +35,9 @@ namespace Apps.MVCApp
 
 			//services.AddDbContext<MVCAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
 
-			services.AddDbContext<MVCAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLLocalConnection")));
+			//services.AddDbContext<MVCAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLLocalConnection")));
 
-			//services.AddDbContext<MVCAppContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostGresSqlConnection")));
+			services.AddDbContext<MVCAppContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostGresSqlConnection")));
 
 
 
