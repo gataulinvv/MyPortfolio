@@ -11,7 +11,10 @@ namespace Apps.MVCApp.Application.Hendlers.Clients
     public class GetClientsListConsumer : IConsumer<GetClientsListCommand>
 	{
 		MVCAppContext _DBcontext;
-
+		/// <summary>
+		/// context was changed in branch dev
+		/// </summary>
+		/// <param name="dbContext"></param>
 		public GetClientsListConsumer(MVCAppContext dbContext)
 		{
 			_DBcontext = dbContext;
