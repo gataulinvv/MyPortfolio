@@ -33,9 +33,9 @@ namespace Apps.MVCApp.Application.Hendlers.Users
 				result = new AppUser { Id = "0", UserName = "", Email = "" };
 
 			}
-			result.user_roles = (await _userManager.GetRolesAsync(result)).ToList();
+			result.userroles = (await _userManager.GetRolesAsync(result)).ToList();
 
-			result.all_roles = _roleManager.Roles.Select(i => i.Name).ToList();
+			result.allroles = _roleManager.Roles.Select(i => i.Name).ToList();
 
 			await context.RespondAsync(result);
 		}

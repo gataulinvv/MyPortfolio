@@ -54,13 +54,13 @@ namespace Apps.MVCApp.Application.Hendlers.Users
 				List<string> domainRoles = await _roleManager.Roles.Select(i => i.Name).ToListAsync();
 
 				//Подписать пользователя на роли
-				var intersect = domainRoles.Intersect(model.user_roles);
+				var intersect = domainRoles.Intersect(model.userroles);
 
 				foreach (var roleName in intersect)
 					await _userManager.AddToRoleAsync(user, roleName);
 
 				//Отписать пользователя от ролей
-				var except = domainRoles.Except(model.user_roles);
+				var except = domainRoles.Except(model.userroles);
 
 				foreach (var roleName in except)
 					await _userManager.RemoveFromRoleAsync(user, roleName);

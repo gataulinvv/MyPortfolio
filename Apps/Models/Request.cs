@@ -7,13 +7,12 @@ namespace Apps.MVCApp.Models
 		public int id { get; set; }	
 		public DateTimeOffset date { get; set; }
 
-		public string user_id { get; set; }
+		public string userid { get; set; }
+		public  AppUser user { get; set; }
 
-		public virtual AppUser user { get; set; }
-
-		public int client_id { get; set; }
-
-		public virtual Client client { get; set; }
+		public int clientid { get; set; }
+		
+		public  Client client { get; set; }
 
 	}
 }

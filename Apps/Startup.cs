@@ -64,17 +64,6 @@ namespace Apps.MVCApp
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 
-
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-			}
-
-
 			app.UseStaticFiles();
 			app.UseRouting();
 			app.UseAuthentication();

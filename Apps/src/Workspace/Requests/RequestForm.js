@@ -43,11 +43,11 @@ const RequestForm = (props) => {
   };
 
   const chengeUserId = (value) => {
-    store.data.user_id = value;
+    store.data.userid = value;
   };
 
   const changeClientId = (value) => {
-    store.data.client_id = value;
+    store.data.clientid = value;
   };
   const submit = (event) => {
     form.setFieldsValue(store.data);
@@ -132,23 +132,23 @@ const RequestForm = (props) => {
                   </Form.Item>
 
                   <Form.Item
-                    name="user_id"
+                    name="userid"
                     label="Пользователь"
                     style={{ marginBottom: '0px' }}
-                    rules={[{ validator: (rule, value) => checkUserId(rule, store.data.user_id) }]}
+                    rules={[{ validator: (rule, value) => checkUserId(rule, store.data.userid) }]}
                   >
                     <div>
                       <Select
                         showSearch
                         onChange={chengeUserId}
-                        value={store.data.user_id}
+                        value={store.data.userid}
                         filterOption={(input, option) => option.children.toLowerCase()
                           .indexOf(input.toLowerCase()) >= 0}
                       >
                         {
-                                                    store.data.users_list
+                                                    store.data.userslist
 
-                                                    && store.data.users_list.map((item) => (
+                                                    && store.data.userslist.map((item) => (
                                                       <Select.Option
                                                         key={item.id}
                                                         value={item.id}
@@ -163,24 +163,24 @@ const RequestForm = (props) => {
                   </Form.Item>
 
                   <Form.Item
-                    name="client_id"
+                    name="clientid"
                     label="Клиент"
                     style={{ marginBottom: '0px' }}
-                    rules={[{ validator: (rule, value) => checkIntValue(rule, store.data.client_id) }]}
+                    rules={[{ validator: (rule, value) => checkIntValue(rule, store.data.clientid) }]}
                   >
                     <div>
                       <Select
                         showSearch
                         onChange={changeClientId}
-                        value={store.data.client_id}
+                        value={store.data.clientid}
                         filterOption={(input, option) => option.children
                           .toLowerCase().indexOf(input.toLowerCase()) >= 0}
                       >
                         {
 
-                                     store.data.clients_list
+                                     store.data.clientslist
 
-                                                    && store.data.clients_list.map((item) => (
+                                                    && store.data.clientslist.map((item) => (
                                                       <Select.Option
                                                         key={item.id}
                                                         value={item.id}

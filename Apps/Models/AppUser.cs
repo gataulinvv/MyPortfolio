@@ -14,13 +14,13 @@ namespace Apps.MVCApp.Models
 			requests = new HashSet<Request>();		
 		}
 		[NotMapped]
-		public List<string> user_roles { get; set; }
-
+		public List<string> userroles { get; set; }
+		
 		[NotMapped]
-		public List<string> all_roles { get; set; }
+		public List<string> allroles { get; set; }
 		
 		public string password { get; set; }
-		public virtual ICollection<Request> requests { get; set; }
+		public  ICollection<Request> requests { get; set; }
 
 	}
 }

@@ -71,7 +71,7 @@ class RequestFormStore {
         if (response.status == 200) {
           this.parseDate(response.data);
 
-          response.data.client_id = response.data.client_id == 0 ? null : response.data.client_id;
+          response.data.clientid = response.data.clientid == 0 ? null : response.data.clientid;
 
           this.data = response.data;
           this.permanentData = response.data;

@@ -122,9 +122,9 @@ namespace Apps.MVCApp
                 _DBcontext.requests.Add(new Request
                 {
                     date = new DateTime(2021, 08, 31).AddMonths(-i).AddDays(i),
-                    client_id = client.id,
+                    clientid = client.id,
                     client = client,
-                    user_id = user.Id,
+                    userid = user.Id,
                     user = user
                 });
 

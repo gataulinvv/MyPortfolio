@@ -34,15 +34,14 @@ namespace Apps.MVCApp.Application.Hendlers.Requests
 
 				if (requestId != 0)
 				{
-				
 					var result = _DBcontext.requests.Select(i => new RequestFormViewModel
 					{
 						Id = i.id,
 						date = i.date,
-						user_id = i.user.Id,						
-						users_list = _DBcontext.Users.ToList(),
-						client_id = i.client.id,
-						clients_list = _DBcontext.clients.Select(i => new Client
+						userid = i.user.Id,						
+						userslist = _DBcontext.Users.ToList(),
+						clientid = i.client.id,
+						clientslist = _DBcontext.clients.Select(i => new Client
 						{
 							id = i.id,
 							name = i.name
@@ -61,8 +60,8 @@ namespace Apps.MVCApp.Application.Hendlers.Requests
 
 					var result = new RequestFormViewModel
 					{
-						users_list = _DBcontext.Users.ToList(),
-						clients_list = _DBcontext.clients.Select(i => new Client
+						userslist = _DBcontext.Users.ToList(),
+						clientslist = _DBcontext.clients.Select(i => new Client
 						{
 							id = i.id,
 							name = i.name

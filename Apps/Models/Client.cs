@@ -8,7 +8,7 @@ namespace Apps.MVCApp.Models
 	{
 		public Client()
 		{
-			requests = new HashSet<Request>();
+			requests = new HashSet<Request>();			
 		}
 		public int id { get; set; }
 
@@ -16,7 +16,7 @@ namespace Apps.MVCApp.Models
 
 		public string email { get; set; }
 
-		public virtual  ICollection<Request> requests { get; set; }
+		public  ICollection<Request> requests { get; set; }
 
 	}
 }

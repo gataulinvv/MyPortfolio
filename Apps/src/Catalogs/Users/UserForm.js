@@ -104,7 +104,7 @@ const UserForm = (props) => {
 
 	const userRolesChange = (value) => {
 
-		store.data.user_roles = value;
+		store.data.userroles = value;
 	}
 
 	const changePassword = (event) => {
@@ -146,14 +146,14 @@ const UserForm = (props) => {
 									</Form.Item>
 
 
-									<Form.Item name="all_roles" label="Роли" style={{ marginBottom: "0px" }}
+									<Form.Item name="allroles" label="Роли" style={{ marginBottom: "0px" }}
 
 									>
 										<div>
 											<Checkbox.Group
-												options={store.data.all_roles}
+												options={store.data.allroles}
 												onChange={userRolesChange}
-												value={store.data.user_roles}
+												value={store.data.userroles}
 											/>
 										</div>
 
@@ -174,24 +174,3 @@ const UserForm = (props) => {
 
 export default observer(UserForm);
 
-//<Select
-//	showSearch
-//	onChange={changeUserPositionId}
-
-
-//	filterOption={(input, option) =>
-//		option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-//	}
-//>
-//	{
-//		store.data.user_roles &&
-
-//		store.data.user_roles.map(item => (
-//			<Select.Option key={item.userName} value={item.isInRole}
-//			>
-//				{item.userName}
-//			</Select.Option>
-//		))
-//	}
-
-//</Select>

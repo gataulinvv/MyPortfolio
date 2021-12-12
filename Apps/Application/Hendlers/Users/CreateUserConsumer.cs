@@ -29,7 +29,7 @@ namespace Apps.MVCApp.Application.Hendlers.Users
 			var httpContext = context.Message.HttpContext;
 
 			
-				var user = new AppUser { UserName = model.UserName, Email = model.Email, user_roles = model.user_roles };
+				var user = new AppUser { UserName = model.UserName, Email = model.Email, userroles = model.userroles };
 
 				//Проверить пароль на валидность			
 				var _passwordValidator = httpContext.RequestServices.GetService(typeof(IPasswordValidator<AppUser>)) as IPasswordValidator<AppUser>;
@@ -45,7 +45,7 @@ namespace Apps.MVCApp.Application.Hendlers.Users
 						//Подписать пользователя на роли
 						List<string> domainRoles = await _roleManager.Roles.Select(i => i.Name).ToListAsync();
 
-						var intersect = domainRoles.Intersect(model.user_roles);
+						var intersect = domainRoles.Intersect(model.userroles);
 
 						foreach (var roleName in intersect)
 							await _userManager.AddToRoleAsync(user, roleName);
