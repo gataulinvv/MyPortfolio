@@ -1,17 +1,11 @@
 ﻿using MassTransit.Mediator;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Apps.MVCApp.Application.Hendlers.Users;
 using Apps.MVCApp.Models;
 using Apps.MVCApp.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-
 
 namespace Apps.MVCApp.Controllers
 {
@@ -20,9 +14,7 @@ namespace Apps.MVCApp.Controllers
 	[Authorize(Roles = "admin")]
 	public class UsersController : Controller
 	{
-
 		IMediator _mediator;
-
 		public UsersController(IMediator mediator)
 		{
 			_mediator = mediator;
@@ -31,7 +23,6 @@ namespace Apps.MVCApp.Controllers
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<UserGridViewModel>>> Get()
 		{
-
 			var client = _mediator.CreateRequestClient<GetUsersListCommand>();
 
 			var response = await client.GetResponse<GetUsersListResult>(new GetUsersListCommand());
@@ -73,7 +64,6 @@ namespace Apps.MVCApp.Controllers
 		[HttpPut]
 		public async Task<ActionResult> Put(AppUser model)
 		{
-
 			var client = _mediator.CreateRequestClient<UpdateUserCommand>();
 
 			var response = await client.GetResponse<UpdateUserResult>(new UpdateUserCommand { User = model, HttpContext = HttpContext });
@@ -82,7 +72,6 @@ namespace Apps.MVCApp.Controllers
 				return Ok(model);
 			else
 				return BadRequest();
-
 		}
 
 		[HttpDelete("{id}")]
@@ -97,6 +86,5 @@ namespace Apps.MVCApp.Controllers
 			else
 				return BadRequest();
 		}
-
 	}
 }

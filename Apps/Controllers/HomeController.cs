@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Apps.MVCApp.Models;
-using System.Diagnostics;
-
 
 namespace Apps.MVCApp.Controllers
 {
@@ -11,16 +8,13 @@ namespace Apps.MVCApp.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
-
 		public HomeController(ILogger<HomeController> logger)
 		{
 			_logger = logger;
 		}
-
 		public IActionResult Index()
 		{
 			return View();
 		}
-
 	}
 }

@@ -1,17 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Apps.MVCApp.Models;
 using Apps.MVCApp.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace Apps.MVCApp.Controllers
-{
-	
+{	
 	public class AccountController : Controller
 	{
 		private SignInManager<AppUser> _signInManager { get; set; }
@@ -26,13 +20,11 @@ namespace Apps.MVCApp.Controllers
 			var result = new JsonResultModel()
 			{
 				IsOk = false,
-				//URL = "/Account/Login",
 				URL = "*",
 				ErrMessage = "Доступ запрещен!"
 			};
 
 			return new ObjectResult(result);
-
 		}
 
 		[HttpGet]
@@ -69,8 +61,6 @@ namespace Apps.MVCApp.Controllers
 					};
 
 					return new ObjectResult(error);
-
-
 				}
 			}
 			return View(model);
@@ -82,7 +72,6 @@ namespace Apps.MVCApp.Controllers
 		{
 			await _signInManager.SignOutAsync();
 			return RedirectToAction("Index", "Home");
-
 		}
 	}
 }
