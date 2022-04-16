@@ -1,95 +1,85 @@
 ﻿using MassTransit;
-using MassTransit.Mediator;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Apps.MVCApp.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Apps.MVCApp.Application.Hendlers.Users
 {
-	public class UpdateUserConsumer : IConsumer<UpdateUserCommand>
-	{
+    public class UpdateUserConsumer : IConsumer<UpdateUserCommand>
+    {
+        UserManager<AppUser> _userManager;
 
-		UserManager<AppUser> _userManager;
+        RoleManager<IdentityRole> _roleManager;
 
-		RoleManager<IdentityRole> _roleManager;		
+        public UpdateUserConsumer(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+        }
+        public async Task Consume(ConsumeContext<UpdateUserCommand> context)
+        {
+            var model = context.Message.User;
 
-		public UpdateUserConsumer(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
-		{
-			_userManager = userManager;
-			_roleManager = roleManager;			
-		}
+            var httpContext = context.Message.HttpContext;
 
-		public async Task Consume(ConsumeContext<UpdateUserCommand> context)
-		{
-			var model = context.Message.User;
+            AppUser user = await _userManager.FindByIdAsync(model.Id);
 
-			var httpContext = context.Message.HttpContext;
+            if (user != null)
+            {
+                user.Email = model.Email;
 
-			AppUser user = await _userManager.FindByIdAsync(model.Id);
+                user.UserName = model.UserName;
 
-			if (user != null)
-			{
-				user.Email = model.Email;
-				user.UserName = model.UserName;
+                if (model.password != "" && model.password != null)
+                {
+                    var _passwordValidator = httpContext.RequestServices.GetService(typeof(IPasswordValidator<AppUser>)) as IPasswordValidator<AppUser>;
 
-				if (model.password != "" && model.password != null)
-				{
-					//Проверить пароль на валидность
-					var _passwordValidator = httpContext.RequestServices.GetService(typeof(IPasswordValidator<AppUser>)) as IPasswordValidator<AppUser>;
-					var _passwordHasher = httpContext.RequestServices.GetService(typeof(IPasswordHasher<AppUser>)) as IPasswordHasher<AppUser>;
-					IdentityResult isCorrect = await _passwordValidator.ValidateAsync(_userManager, user, model.password);
+                    var _passwordHasher = httpContext.RequestServices.GetService(typeof(IPasswordHasher<AppUser>)) as IPasswordHasher<AppUser>;
 
-					if (isCorrect.Succeeded)				
-						user.PasswordHash = _passwordHasher.HashPassword(user, model.password);					
-					else
-						await context.RespondAsync(new UpdateUserResult { Succeeded = false, Text = "Password is not correct!" });
+                    IdentityResult isCorrect = await _passwordValidator.ValidateAsync(_userManager, user, model.password);
 
-				}
+                    if (isCorrect.Succeeded)
+                        user.PasswordHash = _passwordHasher.HashPassword(user, model.password);
+                    else
+                        await context.RespondAsync(new UpdateUserResult { Succeeded = false, Text = "Password is not correct!" });
 
-				List<string> domainRoles = await _roleManager.Roles.Select(i => i.Name).ToListAsync();
+                }
 
-				//Подписать пользователя на роли
-				var intersect = domainRoles.Intersect(model.userroles);
+                List<string> domainRoles = await _roleManager.Roles.Select(i => i.Name).ToListAsync();
 
-				foreach (var roleName in intersect)
-					await _userManager.AddToRoleAsync(user, roleName);
+                //Подписать пользователя на роли
+                var intersect = domainRoles.Intersect(model.userroles);
 
-				//Отписать пользователя от ролей
-				var except = domainRoles.Except(model.userroles);
+                foreach (var roleName in intersect)
+                    await _userManager.AddToRoleAsync(user, roleName);
 
-				foreach (var roleName in except)
-					await _userManager.RemoveFromRoleAsync(user, roleName);
+                //Отписать пользователя от ролей
+                var except = domainRoles.Except(model.userroles);
 
-				if ((await _userManager.UpdateAsync(user)).Succeeded == true)
-					await context.RespondAsync(new UpdateUserResult { Succeeded = true, Text = "Item is updated!" }) ;
-				else
-					await context.RespondAsync(new UpdateUserResult { Succeeded = false, Text = "Item is not updated!" });
+                foreach (var roleName in except)
+                    await _userManager.RemoveFromRoleAsync(user, roleName);
 
-
-			}
-			else
-				await context.RespondAsync(new UpdateUserResult { Succeeded = false, Text = "Item is not found!" });
-
-		}
-	}
-
-	public class UpdateUserCommand
-	{
-		public HttpContext HttpContext { get; set; }
-		public AppUser User { get; set; }
-
-	}
-
-
-	public class UpdateUserResult
-	{
-		public bool Succeeded { get; set; }
-		public string Text { get; set; }
-	}
-
+                if ((await _userManager.UpdateAsync(user)).Succeeded == true)
+                    await context.RespondAsync(new UpdateUserResult { Succeeded = true, Text = "Item is updated!" });
+                else
+                    await context.RespondAsync(new UpdateUserResult { Succeeded = false, Text = "Item is not updated!" });
+            }
+            else
+                await context.RespondAsync(new UpdateUserResult { Succeeded = false, Text = "Item is not found!" });
+        }
+    }
+    public class UpdateUserCommand
+    {
+        public HttpContext HttpContext { get; set; }
+        public AppUser User { get; set; }
+    }
+    public class UpdateUserResult
+    {
+        public bool Succeeded { get; set; }
+        public string Text { get; set; }
+    }
 }

@@ -1,22 +1,16 @@
 ﻿using MassTransit;
 using Apps.MVCApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Apps.MVCApp.Application.Hendlers.Clients
 {
 	public class CreateClientConsumer : IConsumer<CreateClientCommand>
 	{
-
 		MVCAppContext _DBcontext;
 		public CreateClientConsumer(MVCAppContext DBcontext)
 		{
 			_DBcontext = DBcontext;
-
 		}
-
 		public async Task Consume(ConsumeContext<CreateClientCommand> context)
 		{
 			await _DBcontext.clients.AddAsync(context.Message.Client);
@@ -27,14 +21,10 @@ namespace Apps.MVCApp.Application.Hendlers.Clients
 				await context.RespondAsync(new CreateClientResult { Succeeded = false, Text = "Item not created" });
 		}
 	}
-
 	public class CreateClientCommand
 	{
 		public Client Client { get; set; }
-
 	}
-
-
 	public class CreateClientResult
 	{
 		public bool Succeeded { get; set; }

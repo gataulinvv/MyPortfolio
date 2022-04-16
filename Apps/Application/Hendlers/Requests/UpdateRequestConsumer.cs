@@ -1,7 +1,5 @@
 ﻿using MassTransit;
 using Apps.MVCApp.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,13 +12,10 @@ namespace Apps.MVCApp.Application.Hendlers.Requests
 		{
 			_DBcontext = dbContext;
 		}
-
 		public async Task Consume(ConsumeContext<UpdateRequestCommand> context)
 		{
-
 			if (!_DBcontext.requests.Any(x => x.id == context.Message.Request.id))
 				await context.RespondAsync(new UpdateRequestResult { Succeeded = false, Text = "Item is not found!" });
-			
 
 			_DBcontext.Update(context.Message.Request);
 
@@ -30,15 +25,11 @@ namespace Apps.MVCApp.Application.Hendlers.Requests
 				await context.RespondAsync(new UpdateRequestResult { Succeeded = false, Text = "Item is not updated" });
 		}
 	}
-
-
 	public class UpdateRequestCommand
 	{
 		public Request Request { get; set; }
 
 	}
-
-
 	public class UpdateRequestResult
 	{
 		public bool Succeeded { get; set; }

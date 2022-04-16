@@ -1,8 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Apps.MVCApp.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +13,8 @@ namespace Apps.MVCApp.Application.Hendlers.Users
 		RoleManager<IdentityRole> _roleManager;
 
 		MVCAppContext _DBcontext;
-		public GetUserByIdConsumer(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, MVCAppContext DBcontext) {
+		public GetUserByIdConsumer(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, MVCAppContext DBcontext)
+		{
 
 			_roleManager = roleManager;
 
@@ -27,11 +26,9 @@ namespace Apps.MVCApp.Application.Hendlers.Users
 		{
 			var result = await _userManager.FindByIdAsync(context.Message.UserId);
 
-
 			if (result == null)
 			{
 				result = new AppUser { Id = "0", UserName = "", Email = "" };
-
 			}
 			result.userroles = (await _userManager.GetRolesAsync(result)).ToList();
 
@@ -45,11 +42,9 @@ namespace Apps.MVCApp.Application.Hendlers.Users
 	{
 		public string UserId { get; set; }
 	}
-
 	public class GetUserByIdResult
 	{
 		public string Text { get; set; }
-
 	}
 }
 

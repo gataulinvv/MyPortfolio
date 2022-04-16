@@ -3,78 +3,71 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Apps.MVCApp.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Apps.MVCApp.Application.Hendlers.Users
 {
-	public class CreateUserConsumer : IConsumer<CreateUserCommand>
-	{
-		UserManager<AppUser> _userManager;
+    public class CreateUserConsumer : IConsumer<CreateUserCommand>
+    {
+        UserManager<AppUser> _userManager;
 
-		RoleManager<IdentityRole> _roleManager;
+        RoleManager<IdentityRole> _roleManager;
+        public CreateUserConsumer(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            _userManager = userManager;
 
-		public CreateUserConsumer(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
-		{
-			_userManager = userManager;
+            _roleManager = roleManager;
+        }
+        public async Task Consume(ConsumeContext<CreateUserCommand> context)
+        {
+            var model = context.Message.User;
 
-			_roleManager = roleManager;
-		}
-		public async Task Consume(ConsumeContext<CreateUserCommand> context)
-		{
-			var model = context.Message.User;
+            var httpContext = context.Message.HttpContext;
 
-			var httpContext = context.Message.HttpContext;
+            var user = new AppUser { UserName = model.UserName, Email = model.Email, userroles = model.userroles };
 
-			
-				var user = new AppUser { UserName = model.UserName, Email = model.Email, userroles = model.userroles };
+            var _passwordValidator = httpContext.RequestServices.GetService(typeof(IPasswordValidator<AppUser>)) as IPasswordValidator<AppUser>;
 
-				//Проверить пароль на валидность			
-				var _passwordValidator = httpContext.RequestServices.GetService(typeof(IPasswordValidator<AppUser>)) as IPasswordValidator<AppUser>;
-				var _passwordHasher = httpContext.RequestServices.GetService(typeof(IPasswordHasher<AppUser>)) as IPasswordHasher<AppUser>;
-				IdentityResult isCorrect = await _passwordValidator.ValidateAsync(_userManager, user, model.password);
+            var _passwordHasher = httpContext.RequestServices.GetService(typeof(IPasswordHasher<AppUser>)) as IPasswordHasher<AppUser>;
 
-				if (isCorrect.Succeeded)
-				{
-					user.PasswordHash = _passwordHasher.HashPassword(user, model.password);
+            IdentityResult isCorrect = await _passwordValidator.ValidateAsync(_userManager, user, model.password);
 
-					if ((await _userManager.CreateAsync(user, model.password)).Succeeded == true)
-					{
-						//Подписать пользователя на роли
-						List<string> domainRoles = await _roleManager.Roles.Select(i => i.Name).ToListAsync();
+            if (isCorrect.Succeeded)
+            {
+                user.PasswordHash = _passwordHasher.HashPassword(user, model.password);
 
-						var intersect = domainRoles.Intersect(model.userroles);
+                if ((await _userManager.CreateAsync(user, model.password)).Succeeded == true)
+                {
+                    List<string> domainRoles = await _roleManager.Roles.Select(i => i.Name).ToListAsync();
 
-						foreach (var roleName in intersect)
-							await _userManager.AddToRoleAsync(user, roleName);
+                    var intersect = domainRoles.Intersect(model.userroles);
 
-						await context.RespondAsync(new CreateUserResult {Succeeded = true, User = user, Text = "Item is created!" });;;
+                    foreach (var roleName in intersect)
+                        await _userManager.AddToRoleAsync(user, roleName);
 
-					}
-					else
-						await context.RespondAsync(new CreateUserResult { Succeeded = false, Text = "Item is not created!" });
-				}
-				else
-					await context.RespondAsync(new CreateUserResult { Succeeded = false, Text = "Password is not correct!" });
-			}
-			
-		}
-	public class CreateUserCommand
-	{
-		public HttpContext HttpContext { get; set; }
-		public AppUser User { get; set; }
+                    await context.RespondAsync(new CreateUserResult { Succeeded = true, User = user, Text = "Item is created!" });
+                }
+                else
+                    await context.RespondAsync(new CreateUserResult { Succeeded = false, Text = "Item is not created!" });
+            }
+            else
+                await context.RespondAsync(new CreateUserResult { Succeeded = false, Text = "Password is not correct!" });
+        }
+    }
+    public class CreateUserCommand
+    {
+        public HttpContext HttpContext { get; set; }
+        public AppUser User { get; set; }
 
-	}
-
-
-	public class CreateUserResult
-	{
-		public bool Succeeded { get; set; }
-		public AppUser User { get; set; }
-		public string Text { get; set; }
-	}
+    }
+    public class CreateUserResult
+    {
+        public bool Succeeded { get; set; }
+        public AppUser User { get; set; }
+        public string Text { get; set; }
+    }
 }
 
 
