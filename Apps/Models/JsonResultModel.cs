@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace Apps.MVCApp.Models
 {
 	public class JsonResultModel
@@ -25,7 +21,6 @@ namespace Apps.MVCApp.Models
 		{
 
 		}
-
 		public JsonResultModel(bool isOk = false, string errMessage = null, object data = null, string url = null)
 		{
 			IsOk = isOk;

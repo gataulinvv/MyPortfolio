@@ -1,12 +1,7 @@
 ﻿using MassTransit.ExtensionsDependencyInjectionIntegration;
-using Microsoft.Extensions.DependencyInjection;
 using Apps.MVCApp.Application.Hendlers.Clients;
 using Apps.MVCApp.Application.Hendlers.Requests;
 using Apps.MVCApp.Application.Hendlers.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Apps.MVCApp.DI
 {
@@ -14,7 +9,6 @@ namespace Apps.MVCApp.DI
 	{
 		public static  void MediatorHandlersRegister(this IServiceCollectionMediatorConfigurator config)
 		{
-
 			//requestsConsumers registrations
 			config.AddConsumer<GetRequestsListConsumer>();			
 
@@ -26,9 +20,7 @@ namespace Apps.MVCApp.DI
 
 			config.AddConsumer<CreateRequestConsumer>();
 
-
 			//usersConsumers registrations
-
 			config.AddConsumer<GetUsersListConsumer>();
 
 			config.AddConsumer<GetUserByIdConsumer>();
@@ -39,21 +31,16 @@ namespace Apps.MVCApp.DI
 
 			config.AddConsumer<DeleteUserConsumer>();
 
-
-
 			//clientsConsumers registrations
-
 			config.AddConsumer<GetClientsListConsumer>();
 
 			config.AddConsumer<GetClientByIdConsumer>();
-
 
 			config.AddConsumer<CreateClientConsumer>();
 
 			config.AddConsumer<DeleteClientConsumer>();
 
 			config.AddConsumer<UpdateClientConsumer>();
-
 		}
 	}
 }

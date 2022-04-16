@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Apps.MVCApp.ViewModels
 {
@@ -19,7 +16,6 @@ namespace Apps.MVCApp.ViewModels
 
         [Display(Name = "Запомнить?")]
         public bool RememberMe { get; set; }
-
         public string ReturnUrl { get; set; }
     }
 }
