@@ -14,71 +14,67 @@ using System.Reflection;
 
 namespace Apps.MVCApp
 {
-	public class Startup
-	{
-		public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-		}
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
-		public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }
 
-		public void ConfigureServices(IServiceCollection services)
-		{
-
-
-			services.AddMediator(config =>
-			{
-				config.MediatorHandlersRegister();
-
-			});
-
-			//services.AddDbContext<MVCAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
-
-			//services.AddDbContext<MVCAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLLocalConnection")));
-
-			services.AddDbContext<MVCAppContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostGresSqlConnection")));
+        public void ConfigureServices(IServiceCollection services)
+        {
 
 
+            services.AddMediator(config =>
+            {
+                config.MediatorHandlersRegister();
 
-			services.AddIdentity<AppUser, IdentityRole>(options =>
-			{
+            });
 
-				options.User.RequireUniqueEmail = false;
-				options.Password.RequireDigit = false;
-				options.Password.RequiredUniqueChars = 0;
-				options.Password.RequireLowercase = false;
-				options.Password.RequireNonAlphanumeric = false;
-				options.Password.RequireUppercase = false;
-				options.Password.RequiredLength = 3;
+            //services.AddDbContext<MVCAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
 
-			}).AddEntityFrameworkStores<MVCAppContext>();
+            services.AddDbContext<MVCAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLLocalConnection")));
 
-			services.AddControllersWithViews(mvcOtions =>
-			{
-				//mvcOtions.EnableEndpointRouting = false;
-			});
-		}
+            //services.AddDbContext<MVCAppContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostGresSqlConnection")));
 
 
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-		{
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
 
-			app.UseStaticFiles();
-			app.UseRouting();
-			app.UseAuthentication();
-			app.UseAuthorization();
+                options.User.RequireUniqueEmail = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+
+            }).AddEntityFrameworkStores<MVCAppContext>();
+
+            services.AddControllersWithViews();
+        }
 
 
-			app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
 
-				endpoints.MapFallbackToController("Index", "Home");
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-			});
-		}
-	}
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapFallbackToController("Index", "Home");
+
+            });
+        }
+    }
 }

@@ -6,7 +6,6 @@ const Main = observer((({ title }) => {
     useEffect(() => {
         document.title = title;
 
-
         return function cleanup() {
             document.title = "MVCApp";
         };
