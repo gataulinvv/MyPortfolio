@@ -2,21 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Apps.MVCApp.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Apps.MVCApp
 {
-
     public class DataInitializer
     {
-
-
         public static async Task InitializeAsync(MVCAppContext DBcontext, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-
             if (!roleManager.Roles.Any())
                 await CreateRoles(roleManager);
 
@@ -29,7 +23,6 @@ namespace Apps.MVCApp
             if (!DBcontext.requests.Any())
                 await CreateRequests(DBcontext, userManager);
         }
-
         private static async Task CreateRoles(RoleManager<IdentityRole> roleManager)
         {
             await roleManager.CreateAsync(new AppRole { Name = "admin", description = "Администратор" });
@@ -39,17 +32,9 @@ namespace Apps.MVCApp
             await roleManager.CreateAsync(new AppRole { Name = "accountant", description = "Бухгалтер" });
 
             await roleManager.CreateAsync(new AppRole { Name = "logist", description = "Логист" });
-
-            //await roleManager.CreateAsync(new IdentityRole("user"));
-
-            //await roleManager.CreateAsync(new IdentityRole("manager"));
-
-
         }
-
         private static async Task CreateUsers(UserManager<AppUser> _userManager, RoleManager<IdentityRole> _roleManager)
-        {
-            //Create admin 
+        {            
             var admin = new AppUser { UserName = "Admin", Email = "admin@mvcapp.com" };
             await _userManager.CreateAsync(admin, "123");
 
@@ -61,7 +46,6 @@ namespace Apps.MVCApp
             string[] namesList = new string[] { "Alex", "Ivan", "Tom", "Elise", "Mariya", "Bob" };
 
             var rnd = new Random();
-
 
             for (int i = 0; i < rolesList.Count(); i++)
             {
@@ -80,34 +64,25 @@ namespace Apps.MVCApp
                 await _userManager.CreateAsync(user, "123");
 
                 await _userManager.AddToRoleAsync(user, role.Name);
-
             }
-
-
-
         }
-
-
-
         private static async Task CreateClients(MVCAppContext DBcontext)
-        {
-
-            await DBcontext.clients.AddAsync(new Client { name = "Yandex", email = "client@Yandex.com" });
+        {              
+            await DBcontext.clients.AddAsync(new Client { name = "Yandex", email = "client@yandex.ru" });
 
             await DBcontext .clients.AddAsync(new Client { name = "Google", email = "client@Google.com" });
 
             await DBcontext.clients.AddAsync(new Client { name = "Microsoft", email = "client@Microsoft.com" });
 
             await DBcontext.SaveChangesAsync();
-        }
 
+            var clients = await DBcontext.clients.ToListAsync();
+        }
         private static async Task CreateRequests(MVCAppContext _DBcontext, UserManager<AppUser> _userManager)
         {
             var users = _userManager.Users.ToList();
 
             var clients = _DBcontext.clients.ToList();
-
-            var requests = new List<Request>();
 
             for (int i = 0; i < users.Count(); i++)
             {
@@ -127,11 +102,9 @@ namespace Apps.MVCApp
                     userid = user.Id,
                     user = user
                 });
-
             }
             
             await _DBcontext.SaveChangesAsync();
-
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Apps.MVCApp.Application.Hendlers.Requests
         public GetRequestsListConsumer(MVCAppContext dbContext)
         {
 
-            var settings = new ConnectionSettings(new Uri("http://localhost:9200/")).DefaultIndex("shakespeare");
+            var settings = new ConnectionSettings(new Uri("http://localhost:9200/")).DefaultIndex("portfolio");
             _ElasticClient = new ElasticClient(settings);
             _DBcontext = dbContext;
         }
@@ -37,10 +37,11 @@ namespace Apps.MVCApp.Application.Hendlers.Requests
         {
             try
             {
-                //var indexResponse = _ElasticClient.IndexDocument(_DBcontext.requests);
+                //_ElasticClient.SearchAsync()
+                //var indexResponse = _ElasticClient.IndexDocument(_DBcontext.clients);
 
                 //var requestsList1 = _DBcontext.requests.Include(x => x.user)
-                    //.ThenInclude(x => x.requests).ToList();
+                //.ThenInclude(x => x.requests).ToList();
 
             }
             catch (Exception ex)
