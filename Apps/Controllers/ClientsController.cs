@@ -8,80 +8,80 @@ using System.Threading.Tasks;
 
 namespace Apps.MVCApp.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	[Authorize(Roles = "manager, accountant")]
-	public class ClientsController : Controller
-	{		
-		IMediator _mediator;
-		public ClientsController(MVCAppContext context, IMediator mediator)
-		{		
-			_mediator = mediator;
-		}
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize(Roles = "manager, accountant")]
+    public class ClientsController : Controller
+    {
+        IMediator _mediator;
+        public ClientsController(MVCAppContext context, IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
-		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Client>>> Get()
-		{
-			var client = _mediator.CreateRequestClient<GetClientsListCommand>();
-		
-			var response = await client.GetResponse<GetClientsListResult>(new GetClientsListCommand());
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Client>>> Get()
+        {
+            var client = _mediator.CreateRequestClient<GetClientsListCommand>();
 
-			var result = new JsonResultModel()
-			{
-				IsOk = true,
-				Data = response.Message.ClientsList,
-				ErrMessage = "Данные успешно получены!"
-			};
+            var response = await client.GetResponse<GetClientsListResult>(new GetClientsListCommand());
 
-			return new ObjectResult(result);
-		}
+            var result = new JsonResultModel()
+            {
+                IsOk = true,
+                Data = response.Message.ClientsList,
+                ErrMessage = "Данные успешно получены!"
+            };
 
-		[HttpGet("{id}")]
-		public async Task<ActionResult<Client>> Get(int id)
-		{
-			var client = _mediator.CreateRequestClient<GetClientByIdCommand>();
+            return new ObjectResult(result);
+        }
 
-			var response = await client.GetResponse<Client>(new GetClientByIdCommand { ClientId = id });
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Client>> Get(int id)
+        {
+            var client = _mediator.CreateRequestClient<GetClientByIdCommand>();
 
-			return new ObjectResult(response.Message);
-		}
+            var response = await client.GetResponse<Client>(new GetClientByIdCommand { ClientId = id });
 
-		[HttpPost]
-		public async Task<ActionResult<Client>> Post(Client model)
-		{
-			var client = _mediator.CreateRequestClient<CreateClientCommand>();
-			var response = await client.GetResponse<CreateClientResult>(new CreateClientCommand { Client = model });
+            return new ObjectResult(response.Message);
+        }
 
-			if (response.Message.Succeeded)
-				return Ok(model);
-			else
-				return BadRequest();
-		}
+        [HttpPost]
+        public async Task<ActionResult<Client>> Post(Client model)
+        {
+            var client = _mediator.CreateRequestClient<CreateClientCommand>();
+            var response = await client.GetResponse<CreateClientResult>(new CreateClientCommand { Client = model });
 
-		[HttpPut]
-		public async Task<ActionResult<Client>> Put(Client model)
-		{
-			var client = _mediator.CreateRequestClient<UpdateClientCommand>();
+            if (response.Message.Succeeded)
+                return Ok(model);
+            else
+                return BadRequest();
+        }
 
-			var response = await client.GetResponse<UpdateClientResult>(new UpdateClientCommand { Client = model });
+        [HttpPut]
+        public async Task<ActionResult<Client>> Put(Client model)
+        {
+            var client = _mediator.CreateRequestClient<UpdateClientCommand>();
 
-			if (response.Message.Succeeded)
-				return Ok(model);
-			else
-				return BadRequest();
-		}
+            var response = await client.GetResponse<UpdateClientResult>(new UpdateClientCommand { Client = model });
 
-		[HttpDelete("{id}")]
-		public async Task<ActionResult> Delete(int id)
-		{
-			var client = _mediator.CreateRequestClient<DeleteClientCommand>();
+            if (response.Message.Succeeded)
+                return Ok(model);
+            else
+                return BadRequest();
+        }
 
-			var response = await client.GetResponse<DeleteClientResult>(new DeleteClientCommand { ClientId = id });
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var client = _mediator.CreateRequestClient<DeleteClientCommand>();
 
-			if (response.Message.Succeeded)
-				return Ok(response.Message.Text);
-			else
-				return BadRequest();
-		}
-	}
+            var response = await client.GetResponse<DeleteClientResult>(new DeleteClientCommand { ClientId = id });
+
+            if (response.Message.Succeeded)
+                return Ok(response.Message.Text);
+            else
+                return BadRequest();
+        }
+    }
 }

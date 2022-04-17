@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Apps.MVCApp.ViewModels
 {
-	public class LoginViewModel
-	{
+    public class LoginViewModel
+    {
         [Required]
         [Display(Name = "Имя")]
         public string UserName { get; set; }

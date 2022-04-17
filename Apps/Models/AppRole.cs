@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Apps.MVCApp.Models
 {
-	public class AppRole : IdentityRole
-	{		
-		public string description { get; set; }
-	}
+    public class AppRole : IdentityRole
+    {
+        public string description { get; set; }
+    }
 }
