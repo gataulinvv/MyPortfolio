@@ -4,9 +4,6 @@ using Apps.MVCApp.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Force.Ddd.Pagination;
-using Force.Extensions;
-using System.Linq.Dynamic.Core;
 
 namespace Apps.MVCApp.Application.Hendlers.Requests
 {
@@ -45,8 +42,7 @@ namespace Apps.MVCApp.Application.Hendlers.Requests
         }
     }
     public class GetRequestsListCommand
-    {
-        public IPaging spec { get; set; }
+    {       
     }
     public class GetReuestsListResult
     {

@@ -36,17 +36,17 @@ namespace Apps.MVCApp
             services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = false;
-              
+
                 options.Password.RequireDigit = false;
-                
+
                 options.Password.RequiredUniqueChars = 0;
-                
+
                 options.Password.RequireLowercase = false;
-                
+
                 options.Password.RequireNonAlphanumeric = false;
-                
+
                 options.Password.RequireUppercase = false;
-                
+
                 options.Password.RequiredLength = 3;
 
             }).AddEntityFrameworkStores<MVCAppContext>();
@@ -58,9 +58,9 @@ namespace Apps.MVCApp
             app.UseStaticFiles();
 
             app.UseRouting();
-         
+
             app.UseAuthentication();
-            
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
