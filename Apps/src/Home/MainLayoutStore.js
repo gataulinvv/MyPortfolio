@@ -1,50 +1,38 @@
-﻿import { makeObservable, action, observable } from 'mobx'
+﻿import { makeObservable, action, observable } from 'mobx';
 import axios from 'axios';
 
 class MainLayoutStore {
-
     collapsed = false;
-    
-    rolesLists = [];    
+
+    rolesLists = [];
 
     constructor() {
+      makeObservable(this, {
 
-        makeObservable(this, {
-            
-            SetCollapse: action,
-            collapsed: observable,
+        SetCollapse: action,
+        collapsed: observable,
 
-        })    
+      });
     }
 
     ClearStore() {
-        this.rolesLists = [];
+      this.rolesLists = [];
     }
 
-	RefreshStore(id) {
+    RefreshStore(id) {
+      axios.get(`/api/Roles${id}`).then((response) => {
+        if (response.status == 200) {
+          this.rolesList = response.data.data;
 
-		axios.get('/api/Roles' + id
-		).then((response) => {
+          this.loading = false;
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
 
-			if (response.status == 200) {
-
-				//if (!response.data.isOk)
-				//	window.location.href = response.data.url;
-
-				this.rolesList = response.data.data;
-				
-				this.loading = false;
-			}
-
-		}).catch((error) => {
-			console.log(error);
-		});
-
-	}
-
-   
     SetCollapse() {
-        this.collapsed = !this.collapsed;
+      this.collapsed = !this.collapsed;
     }
 }
 

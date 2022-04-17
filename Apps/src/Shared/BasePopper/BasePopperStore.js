@@ -1,43 +1,37 @@
-import { makeAutoObservable, action } from 'mobx'
+import { makeAutoObservable, action } from 'mobx';
 
 class BasePopperStore {
-
     anchor = null;
-    
+
     open = Boolean(this.anchor);
 
-    hidden = "visible";
+    hidden = 'visible';
 
-    visible = "visible";
+    visible = 'visible';
 
     min = false;
 
     constructor() {
-        makeAutoObservable(this,
-            {
+      makeAutoObservable(this,
+        {
 
-            });
+        });
     }
 
     Minimize(min) {
-        this.min = min;
+      this.min = min;
     }
 
     SetAnchor(event) {
+      this.anchor = event;
 
-        this.anchor = event;
-
-        this.open = Boolean(this.anchor);
+      this.open = Boolean(this.anchor);
     }
-
 
     HideShowComponents() {
-
-        this.hidden = "hidden";
-        this.visible = "visible";
+      this.hidden = 'hidden';
+      this.visible = 'visible';
     }
-
-  }
-
+}
 
 export default BasePopperStore;

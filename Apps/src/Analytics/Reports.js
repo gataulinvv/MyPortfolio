@@ -1,20 +1,16 @@
 ﻿import React, { useEffect } from 'react';
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react';
 
+const Reports = observer((({ title }) => {
+  useEffect(() => {
+    document.title = title;
 
-const Reports = observer((({ title}) => {
-    
-    useEffect(() => {
-        document.title = title;
+    return function cleanup() {
+      document.title = 'MVCApp';
+    };
+  });
 
+  return (<h3>{title}</h3>);
+}));
 
-        return function cleanup() {
-            document.title = "MVCApp";
-        };
-    });
-
-    return (<h3>{title}</h3>)
-}))
-
-export default Reports
-
+export default Reports;

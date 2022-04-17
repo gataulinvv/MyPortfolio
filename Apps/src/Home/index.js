@@ -3,12 +3,8 @@ import ReactDOM from 'react-dom';
 import MainLayout from './MainLayout';
 import 'antd/dist/antd.css';
 
+const App = () => (
+  <MainLayout />
+);
 
-var App = () => {
-
-    return (
-        <MainLayout/>
-    );
-}
-
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));

@@ -26,20 +26,34 @@ const RequestsGrid = ({ title }) => {
   const columns = [
     {
       width: '13.3%',
-      title: () => <StringFilter columnName="id" columnTitle="Номер заявки" dataSource={store.data} parentViewStore={store} />,
+      title: () => (
+        <StringFilter
+          columnName="id"
+          columnTitle="Номер заявки"
+          dataSource={store.data}
+          parentViewStore={store}
+        />
+      ),
       // title:'Номер заявки',
       dataIndex: 'id',
       key: 'id',
 
       sorter: {
-        compare: (a, b) => (a.id - b.id), // , multiple: 3
+        compare: (a, b) => (a.id - b.id),
       },
 
     },
 
     {
       width: '13.3%',
-      title: () => <StringFilter columnName="date" columnTitle="Дата заявки" dataSource={store.data} parentViewStore={store} />,
+      title: () => (
+        <StringFilter
+          columnName="date"
+          columnTitle="Дата заявки"
+          dataSource={store.data}
+          parentViewStore={store}
+        />
+      ),
       dataIndex: 'date',
       key: 'date',
       sorter: {
@@ -49,7 +63,14 @@ const RequestsGrid = ({ title }) => {
     },
     {
       width: '13.3%',
-      title: () => <StringFilter columnName="clientName" columnTitle="Организация" dataSource={store.data} parentViewStore={store} />,
+      title: () => (
+        <StringFilter
+          columnName="clientName"
+          columnTitle="Организация"
+          dataSource={store.data}
+          parentViewStore={store}
+        />
+      ),
       dataIndex: 'clientName',
       key: 'clientName',
       sorter: {
@@ -58,7 +79,14 @@ const RequestsGrid = ({ title }) => {
     },
     {
       width: '13.3%',
-      title: () => <StringFilter columnName="userName" columnTitle="Пользователь" dataSource={store.data} parentViewStore={store} />,
+      title: () => (
+        <StringFilter
+          columnName="userName"
+          columnTitle="Пользователь"
+          dataSource={store.data}
+          parentViewStore={store}
+        />
+      ),
       dataIndex: 'userName',
       key: 'userName',
       sorter: {
@@ -68,7 +96,14 @@ const RequestsGrid = ({ title }) => {
     },
     {
       width: '13.3%',
-      title: () => <StringFilter columnName="userEmail" columnTitle="Email" dataSource={store.data} parentViewStore={store} />,
+      title: () => (
+        <StringFilter
+          columnName="userEmail"
+          columnTitle="Email"
+          dataSource={store.data}
+          parentViewStore={store}
+        />
+      ),
       dataIndex: 'userEmail',
       key: 'userEmail',
       sorter: {
@@ -78,7 +113,14 @@ const RequestsGrid = ({ title }) => {
 
     {
       width: '13.3%',
-      title: () => <StringFilter columnName="roleNamesList" columnTitle="Роли (должности)" dataSource={store.data} parentViewStore={store} />,
+      title: () => (
+        <StringFilter
+          columnName="roleNamesList"
+          columnTitle="Роли (должности)"
+          dataSource={store.data}
+          parentViewStore={store}
+        />
+      ),
       dataIndex: 'roleNamesList',
       key: 'roleNamesList',
       sorter: {
@@ -92,7 +134,12 @@ const RequestsGrid = ({ title }) => {
       dataIndex: 'id',
       key: 'id',
       render: (text, record, index) => (
-        <BasePopper titleType="edit" header="Карточка заявки" showcase={text} Content={<RequestForm id={record.id} parentViewStore={store} />} />
+        <BasePopper
+          titleType="edit"
+          header="Карточка заявки"
+          showcase={text}
+          Content={<RequestForm id={record.id} parentViewStore={store} />}
+        />
       ),
     },
     {
@@ -147,7 +194,12 @@ const RequestsGrid = ({ title }) => {
             </td>
 
             <td align="right">
-              <BasePopper titleType="add" header="Карточка заявки" showcase="Новая заявка" Content={<RequestForm id={0} parentViewStore={store} />} />
+              <BasePopper
+                titleType="add"
+                header="Карточка заявки"
+                showcase="Новая заявка"
+                Content={<RequestForm id={0} parentViewStore={store} />}
+              />
             </td>
           </tr>
         </tbody>

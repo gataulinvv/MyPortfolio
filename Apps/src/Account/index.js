@@ -3,12 +3,8 @@ import ReactDOM from 'react-dom';
 import LoginForm from './LoginForm';
 import 'antd/dist/antd.css';
 
+const App = () => (
+  <LoginForm />
+);
 
-var App = () => {
-
-    return (
-        <LoginForm/>
-    );
-}
-
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));

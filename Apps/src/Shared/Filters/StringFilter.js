@@ -1,66 +1,60 @@
-﻿import { Input } from 'antd';
+﻿/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
+import { Input } from 'antd';
 import React from 'react';
 
-
-
 const StringFilter = (props) => {
+  const {
+    columnName, columnTitle, dataSource, parentViewStore,
+  } = props;
 
-	const { columnName, columnTitle, dataSource, parentViewStore } = props;
+  const filterChange = (event) => {
+    const matrix = parentViewStore.filterMatrix;
 
+    const filterValue = event.target.value;
 
-	const filterChange = (event) => {
+    for (const rowIndex in dataSource) {
+      const dataRow = dataSource[rowIndex];
 
-		var matrix = parentViewStore.filterMatrix;
+      const matrixRow = matrix[dataRow.id];
 
-		const filterValue = event.target.value;
+      const matrixColumn = matrixRow.columns[columnName];
 
-		for (var rowIndex in dataSource) {
+      const cellValue = dataRow[columnName];
 
-			var dataRow = dataSource[rowIndex];
+      const isInclude = cellValue.toString().toLowerCase().includes(filterValue.toLowerCase());
 
-			var matrixRow = matrix[dataRow.id];
+      if (!isInclude) {
+        matrixRow.display = false;
+        matrixColumn.match = false;
+      } else {
+        matrixColumn.match = true;
+        matrixRow.display = true;
 
-			var matrixColumn = matrixRow.columns[columnName];
+        for (const colName in matrixRow.columns) {
+          const { match } = matrixRow.columns[colName];
 
-			var cellValue = dataRow[columnName];
+          if (!match) {
+            matrixRow.display = false;
+          }
+        }
+      }
+    }
 
-			var isInclude = cellValue.toString().toLowerCase().includes(filterValue.toLowerCase());
+    const filteredData = dataSource.filter(
 
-			if (!isInclude) {
-				matrixRow.display = false;
-				matrixColumn.match = false;
-			}
-			else {
-				matrixColumn.match = true;
-				matrixRow.display = true;
+      (entry) => matrix[entry.id].display,
+    );
 
-				for (var colName in matrixRow.columns) {
+    parentViewStore.SetFilteredData(filteredData);
+  };
 
-					var match = matrixRow.columns[colName].match
-
-					if (!match) {
-						matrixRow.display = false;
-					}
-				}
-
-			}
-		}
-
-		const filteredData = dataSource.filter(
-
-			entry => matrix[entry.id].display
-		);
-		
-		parentViewStore.SetFilteredData(filteredData);
-
-	}
-
-	return (
-		<>
-			{columnTitle}
-			<Input onClick={(e) => e.stopPropagation()}  onChange={(e) => filterChange(e)} />
-		</>
-	)
-}
+  return (
+    <>
+      {columnTitle}
+      <Input onClick={(e) => e.stopPropagation()} onChange={(e) => filterChange(e)} />
+    </>
+  );
+};
 
 export default StringFilter;

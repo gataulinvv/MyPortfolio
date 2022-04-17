@@ -207,7 +207,3 @@ const RequestForm = (props) => {
 };
 
 export default observer(RequestForm);
-
-// <Spin spinning={store.loading} >
-// <Spin spinning={store.loading}>
-// </Spin>

@@ -1,6 +1,8 @@
 ﻿import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react'
-import { Button, Input, Form, Spin, message, Skeleton } from 'antd';
+import { observer } from 'mobx-react';
+import {
+  Button, Input, Form, Spin, message, Skeleton,
+} from 'antd';
 
 import 'antd/dist/antd.css';
 import themes from '/src/Shared/themes';
@@ -8,135 +10,128 @@ import { SaveOutlined } from '@ant-design/icons';
 
 import ClientFormStore from './ClientFormStore';
 
-
-
 const ClientForm = (props) => {
+  const { id, parentViewStore } = props;
 
-	const { id, parentViewStore } = props;
+  const [store] = useState(new ClientFormStore(parentViewStore));
 
-	const [store] = useState(new ClientFormStore(parentViewStore));
+  useEffect(() => {
+    // if (id != 0)
+    store.RefreshStore(id);
 
+    return function cleanup() {
+      store.ClearStore();
+    };
+  }, []);
 
-	useEffect(() => {
+  const theme = themes.male;
 
-		//if (id != 0)
-		store.RefreshStore(id);
+  const checkEmail = (rule, value) => {
+    const regExp = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
 
-		return function cleanup() {
-			store.ClearStore();
-		};
-	}, [])
+    if (regExp.test(value)) {
+      return Promise.resolve();
+    }
 
-	var theme = themes["male"];
+    return Promise.reject(errMessage);
+  };
 
-	const checkEmail = (rule, value) => {
+  const changeName = (event) => {
+    store.data.name = event.target.value;
+  };
+  const changeEmail = (event) => {
+    store.data.email = event.target.value;
+  };
 
-		var regExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const submit = (event) => {
+    form.setFieldsValue(store.data);
 
-		if (regExp.test(value)) {
-			return Promise.resolve()
-		}
-		else {
-			return Promise.reject(errMessage);
-		}
-	}
+    form.validateFields()
+      .then((values) => {
+        const item = form.getFieldsValue(true);
 
-	const changeName = (event) => {
-		store.data.name = event.target.value;
-	}
-	const changeEmail = (event) => {
-		store.data.email = event.target.value;
-	}
+        if (!item.id) {
+          async function add(item) {
+            const result = await store.Add(item);
+            if (result == true) {
+              message.success('Елемент успешно создан');
+              parentViewStore.RefreshStore();
+            } else { message.error('Создать изменить не удалось!'); }
+          }
+          add(item);
+        } else {
+          async function update(item) {
+            const result = await store.Update(item);
+            if (result == true) {
+              message.success('Елемент успешно изменен');
+              parentViewStore.RefreshStore();
+            } else { message.error('Елемент изменить не удалось!'); }
+          }
+          update(item);
+        }
+      })
+      .catch((errorInfo) => {
+        console.log('error');
+      });
+  };
 
-	const submit = (event) => {
+  const [form] = Form.useForm();
 
-		form.setFieldsValue(store.data);
+  const errMessage = 'Заполните поле!';
 
-		form.validateFields()
-			.then((values) => {
+  return (
 
-				var item = form.getFieldsValue(true);
+    <div onMouseDown={(e) => e.stopPropagation()}>
+      <Skeleton loading={store.loading}>
+        <Form form={form} layout="horizontal" labelCol={{ span: 10 }}>
 
-				if (!item.id) {
+          <table>
+            <tbody>
+              <tr>
+                <td align="right">
+                  <Button
+                    icon={<SaveOutlined />}
+                    onClick={(event) => submit(event)}
+                    style={{ background: theme.background, color: theme.color }}
+                  >
+                    Сохранить
 
-					async function add(item) {
-						var result = await store.Add(item);
-						if (result == true) {
-							message.success('Елемент успешно создан');
-							parentViewStore.RefreshStore();
-						}
-						else
-							message.error('Создать изменить не удалось!');
-					}
-					add(item);
-				}
-				else {
+                  </Button>
+                </td>
+              </tr>
+              <tr>
+                <td>
 
-					async function update(item) {
+                  <Form.Item
+                    name="name"
+                    label="Имя"
+                    style={{ marginBottom: '0px' }}
+                    rules={[{
+                      required: true, min: 1, type: 'string', message: errMessage,
+                    }]}
+                  >
+                    <div><Input value={store.data.name} onChange={changeName} /></div>
+                  </Form.Item>
 
-						var result = await store.Update(item);
-						if (result == true) {
-							message.success('Елемент успешно изменен');
-							parentViewStore.RefreshStore();
-						}
-						else
-							message.error('Елемент изменить не удалось!');
-					};
-					update(item);
-				}
+                  <Form.Item
+                    name="email"
+                    label="Email"
+                    style={{ marginBottom: '0px' }}
+                    rules={[{ validator: checkEmail }]}
+                    validateTrigger="onChange"
+                  >
+                    <div><Input value={store.data.email} onChange={changeEmail} /></div>
+                  </Form.Item>
 
-			})
-			.catch((errorInfo) => {
-				console.log("error");
-			});
-	}
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-	const [form] = Form.useForm();
-
-	const errMessage = 'Заполните поле!'
-
-
-
-
-	return (
-
-		<div onMouseDown={(e) => e.stopPropagation()}>
-			<Skeleton loading={store.loading}>
-				<Form form={form} layout="horizontal" labelCol={{ span: 10 }}>
-
-					<table >
-						<tbody>
-							<tr>
-								<td align="right">
-									<Button icon={<SaveOutlined />} onClick={(event) => submit(event)}
-										style={{ background: theme.background, color: theme.color }}>Сохранить</Button>
-								</td>
-							</tr>
-							<tr>
-								<td>
-
-									<Form.Item name="name" label="Имя" style={{ marginBottom: "0px" }} rules={[{ required: true, min: 1, type: "string", message: errMessage }]}>
-										<div><Input value={store.data.name} onChange={changeName} /></div>
-									</Form.Item>
-
-									<Form.Item name="email" label="Email" style={{ marginBottom: "0px" }}
-										rules={[{ validator: checkEmail }]}
-										validateTrigger="onChange"
-									>
-										<div><Input value={store.data.email} onChange={changeEmail} /></div>
-									</Form.Item>
-
-								</td>
-							</tr>
-						</tbody>
-					</table>
-
-				</Form>
-			</Skeleton>
-		</div>
-	)
-}
-
+        </Form>
+      </Skeleton>
+    </div>
+  );
+};
 
 export default observer(ClientForm);
-

@@ -11403,7 +11403,7 @@ var LoginForm = () => {
       var item = form.getFieldsValue(true);
       store.DoLogin(item);
     }).catch(errorInfo => {
-      console.log("error");
+      console.log('error');
     });
   };
 
@@ -11419,12 +11419,12 @@ var LoginForm = () => {
     name: "userName",
     label: "\u0418\u043C\u044F \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F",
     style: {
-      marginBottom: "0px"
+      marginBottom: '0px'
     },
     rules: [{
       required: true,
       min: 1,
-      type: "string",
+      type: 'string',
       message: errMessage
     }]
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(antd__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -11434,12 +11434,12 @@ var LoginForm = () => {
     name: "password",
     label: "\u041F\u0430\u0440\u043E\u043B\u044C",
     style: {
-      marginBottom: "0px"
+      marginBottom: '0px'
     },
     rules: [{
       required: true,
       min: 1,
-      type: "string",
+      type: 'string',
       message: errMessage
     }]
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(antd__WEBPACK_IMPORTED_MODULE_5__["default"].Password, {
@@ -11479,6 +11479,9 @@ var LoginForm = () => {
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! antd */ "./node_modules/antd/es/message/index.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+/* eslint-disable no-mixed-spaces-and-tabs */
+
+/* eslint-disable no-tabs */
 
 
 
@@ -11487,9 +11490,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 class LoginFormStore {
   constructor() {
     _defineProperty(this, "data", {
-      userName: "",
-      password: "",
-      returnUrl: "/"
+      userName: '',
+      password: '',
+      returnUrl: '/'
     });
 
     (0,mobx__WEBPACK_IMPORTED_MODULE_2__.makeObservable)(this, {
@@ -11500,17 +11503,19 @@ class LoginFormStore {
 
   DoLogin(model) {
     var token = document.querySelector('__RequestVerificationToken, input').getAttribute('value');
-    axios__WEBPACK_IMPORTED_MODULE_0___default().post("/Account/Login", qs__WEBPACK_IMPORTED_MODULE_1___default().stringify({
-      '__RequestVerificationToken': token,
-      model: model
+    axios__WEBPACK_IMPORTED_MODULE_0___default().post('/Account/Login', qs__WEBPACK_IMPORTED_MODULE_1___default().stringify({
+      __RequestVerificationToken: token,
+      model
     })).then(response => {
       if (response.status == 200) {
-        if (response.data.isOk) window.location.href = response.data.url;else {
+        if (response.data.isOk) {
+          window.location.href = response.data.url;
+        } else {
           antd__WEBPACK_IMPORTED_MODULE_3__["default"].error(response.data.errMessage);
           this.data = {
-            userName: "",
-            password: "",
-            returnUrl: "/"
+            userName: '',
+            password: '',
+            returnUrl: '/'
           };
         }
       }
@@ -11537,13 +11542,12 @@ class LoginFormStore {
 /* harmony export */ });
 var themes = {
   female: {
-    color: "rgba(255, 255, 255, 0.65)",
-    background: "#05417a"
+    color: 'rgba(255, 255, 255, 0.65)',
+    background: '#05417a'
   },
   male: {
-    //color: "rgba(255, 255, 255, 0.65)",
     color: 'white',
-    background: "#001529"
+    background: '#001529'
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (themes);
@@ -66351,11 +66355,9 @@ var __webpack_exports__ = {};
 
 
 
-var App = () => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_3__["default"], null);
-};
+var App = () => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_LoginForm__WEBPACK_IMPORTED_MODULE_3__["default"], null);
 
-react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(App, null), document.getElementById("root"));
+react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(App, null), document.getElementById('root'));
 })();
 
 /******/ })()
