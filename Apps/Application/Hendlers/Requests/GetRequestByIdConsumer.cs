@@ -1,10 +1,10 @@
-﻿using MassTransit;
-using Microsoft.AspNetCore.Identity;
-using Apps.MVCApp.Models;
-using Apps.MVCApp.ViewModels;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Apps.MVCApp.Models;
+using Apps.MVCApp.ViewModels;
+using MassTransit;
+using Microsoft.AspNetCore.Identity;
 
 namespace Apps.MVCApp.Application.Hendlers.Requests
 {

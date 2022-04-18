@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
 using Apps.MVCApp.Models;
 using Apps.MVCApp.ViewModels;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Apps.MVCApp.Controllers
 {

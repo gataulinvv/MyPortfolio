@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Apps.MVCApp.Models;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Apps.MVCApp.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Apps.MVCApp
 {
@@ -34,7 +34,7 @@ namespace Apps.MVCApp
             await roleManager.CreateAsync(new AppRole { Name = "logist", description = "Логист" });
         }
         private static async Task CreateUsers(UserManager<AppUser> _userManager, RoleManager<IdentityRole> _roleManager)
-        {            
+        {
             var admin = new AppUser { UserName = "Admin", Email = "admin@mvcapp.com" };
             await _userManager.CreateAsync(admin, "123");
 
@@ -67,10 +67,10 @@ namespace Apps.MVCApp
             }
         }
         private static async Task CreateClients(MVCAppContext DBcontext)
-        {              
+        {
             await DBcontext.clients.AddAsync(new Client { name = "Yandex", email = "client@yandex.ru" });
 
-            await DBcontext .clients.AddAsync(new Client { name = "Google", email = "client@Google.com" });
+            await DBcontext.clients.AddAsync(new Client { name = "Google", email = "client@Google.com" });
 
             await DBcontext.clients.AddAsync(new Client { name = "Microsoft", email = "client@Microsoft.com" });
 
@@ -103,7 +103,7 @@ namespace Apps.MVCApp
                     user = user
                 });
             }
-            
+
             await _DBcontext.SaveChangesAsync();
         }
     }

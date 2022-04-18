@@ -1,7 +1,7 @@
-﻿using MassTransit.ExtensionsDependencyInjectionIntegration;
-using Apps.MVCApp.Application.Hendlers.Clients;
+﻿using Apps.MVCApp.Application.Hendlers.Clients;
 using Apps.MVCApp.Application.Hendlers.Requests;
 using Apps.MVCApp.Application.Hendlers.Users;
+using MassTransit.ExtensionsDependencyInjectionIntegration;
 
 namespace Apps.MVCApp.DI
 {

@@ -1,11 +1,11 @@
-﻿using MassTransit;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Apps.MVCApp.Models;
+using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Apps.MVCApp.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Apps.MVCApp.Application.Hendlers.Users
 {

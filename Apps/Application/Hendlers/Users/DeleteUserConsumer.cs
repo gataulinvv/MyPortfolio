@@ -1,7 +1,7 @@
-﻿using MassTransit;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Threading.Tasks;
 using Apps.MVCApp.Models;
-using System.Threading.Tasks;
+using MassTransit;
+using Microsoft.AspNetCore.Identity;
 
 namespace Apps.MVCApp.Application.Hendlers.Users
 {

@@ -1,10 +1,10 @@
-﻿using MassTransit.Mediator;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Apps.MVCApp.Application.Hendlers.Clients;
 using Apps.MVCApp.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using MassTransit.Mediator;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Apps.MVCApp.Controllers
 {

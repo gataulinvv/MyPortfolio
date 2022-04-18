@@ -1,6 +1,6 @@
-﻿using MassTransit;
+﻿using System.Threading.Tasks;
 using Apps.MVCApp.Models;
-using System.Threading.Tasks;
+using MassTransit;
 
 namespace Apps.MVCApp.Application.Hendlers.Requests
 {

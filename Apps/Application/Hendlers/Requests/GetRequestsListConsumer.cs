@@ -1,9 +1,9 @@
-﻿using MassTransit;
-using Apps.MVCApp.Models;
-using Apps.MVCApp.ViewModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Apps.MVCApp.Models;
+using Apps.MVCApp.ViewModels;
+using MassTransit;
 
 namespace Apps.MVCApp.Application.Hendlers.Requests
 {
@@ -42,7 +42,7 @@ namespace Apps.MVCApp.Application.Hendlers.Requests
         }
     }
     public class GetRequestsListCommand
-    {       
+    {
     }
     public class GetReuestsListResult
     {
