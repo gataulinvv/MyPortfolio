@@ -14,7 +14,7 @@ namespace Apps.MVCApp.Controllers
     public class ClientsController : Controller
     {
         IMediator _mediator;
-        public ClientsController(MVCAppContext context, IMediator mediator)
+        public ClientsController(IMediator mediator)
         {
             _mediator = mediator;
         }
