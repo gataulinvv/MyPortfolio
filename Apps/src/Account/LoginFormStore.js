@@ -6,7 +6,7 @@ import qs from 'qs';
 import { message } from 'antd';
 
 class LoginFormStore {
-	data = { userName: '', password: '', returnUrl: '/' };
+	data = { userName: 'admin', password: '123', returnUrl: '/' };
 
 	constructor() {
 	  makeObservable(this, {

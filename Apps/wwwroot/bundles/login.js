@@ -11490,8 +11490,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 class LoginFormStore {
   constructor() {
     _defineProperty(this, "data", {
-      userName: '',
-      password: '',
+      userName: 'admin',
+      password: '123',
       returnUrl: '/'
     });
 
